@@ -114,12 +114,14 @@ void SFAsset::GoEast() {
 
 void SFAsset::GoNorth() {
   Vector2 c = *(bbox->centre) + Vector2(0.0f, 5.0f);
+
   bbox->centre.reset();
   bbox->centre = make_shared<Vector2>(c);
 }
 
 void SFAsset::GoSouth() {
   Vector2 c = *(bbox->centre) + Vector2(0.0f, -5.0f);
+
   bbox->centre.reset();
   bbox->centre = make_shared<Vector2>(c);
 }
@@ -141,7 +143,13 @@ bool SFAsset::IsAlive() {
 }
 
 void SFAsset::HandleCollision() {
-  if(SFASSET_PROJECTILE == type || SFASSET_ALIEN == type) {
+  if(SFASSET_PROJECTILE == type /*||SFASSET_ALIEN == type*/) {
     SetNotAlive();
+  }
+  if (SFASSET_PLAYER == type)
+  {
+    Vector2 c = *(bbox->centre) + Vector2(0.0f, -20.0f);
+  bbox->centre.reset();
+  bbox->centre = make_shared<Vector2>(c);
   }
 }
