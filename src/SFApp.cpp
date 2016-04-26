@@ -95,15 +95,14 @@ void SFApp::OnUpdateWorld() {
       }
     }
   }
-
- /* for(auto pl : player){
-    for(auto al : aliens){
-      if (pl->CollidesWith(al)){
-       pl->HandleCollision();
-      }
+// player and alien collision
+  for(auto a : aliens){
+    if(player->CollidesWith(a)){
+     player->HandleCollision();
+     a->HandleCollision();
     }
-  }*/
-  // remove dead aliens (the long way)
+  }
+  // remove dead aliens (the long way
   list<shared_ptr<SFAsset>> tmp;
   for(auto a : aliens) {
     if(a->IsAlive()) {
