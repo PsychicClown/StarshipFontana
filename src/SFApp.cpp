@@ -78,7 +78,7 @@ void SFApp::OnUpdateWorld() {
   }
 
   for(auto c: coins) {
-    //c->GoNorth();
+    c->GoNorth();
   }
 
   // Update enemy positions

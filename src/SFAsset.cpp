@@ -2,8 +2,7 @@
 
 int SFAsset::SFASSETID=0;
 
-int x = 0;
-int y = 0;
+bool collide = false;
 
 SFAsset::SFAsset(SFASSETTYPE type, std::shared_ptr<SFWindow> window): type(type), sf_window(window) {
   this->id   = ++SFASSETID;
@@ -97,8 +96,6 @@ void SFAsset::OnRender() {
 }
 
 void SFAsset::GoWest() {
-  x = 5.0f;
-  y = 0.0f;
   Vector2 c = *(bbox->centre) + Vector2(-5.0f, 0.0f);
 
   if(!(c.getX() < 0)) {
@@ -108,8 +105,6 @@ void SFAsset::GoWest() {
 }
 
 void SFAsset::GoEast() {
-  x = -5.0f;
-  y = 0.0f;
   int w, h;
   SDL_GetRendererOutputSize(sf_window->getRenderer(), &w, &h);
   Vector2 c = *(bbox->centre) + Vector2(5.0f, 0.0f);
@@ -121,11 +116,12 @@ void SFAsset::GoEast() {
 }
 
 void SFAsset::GoNorth() {
-  y = -5.0f;
-  x = 0.0f;
   int w, h;
   SDL_GetRendererOutputSize(sf_window->getRenderer(), &w, &h);
   Vector2 c = *(bbox->centre) + Vector2(0.0f, 5.0f);
+  
+
+    collide = true;
 
   if(!(c.getY() > h))
   {
@@ -135,9 +131,8 @@ void SFAsset::GoNorth() {
 }
 
 void SFAsset::GoSouth() {
-  y = 5.0f;
-  x = 0.0f;
   Vector2 c = *(bbox->centre) + Vector2(0.0f, -5.0f);
+
   if(!(c.getY() < 0))
   {
     bbox->centre.reset();
@@ -168,8 +163,33 @@ void SFAsset::HandleCollision() {
   }
   if (SFASSET_PLAYER == type)
   {
-    Vector2 c = *(bbox->centre) + Vector2(x, y);
-    bbox->centre.reset();
-    bbox->centre = make_shared<Vector2>(c);
+   if(collide == true)
+  {
+     GoSouth();
+     collide = false;
+  }
+/*
+    if(SDLK_UP)
+    {
+      if (move == 0)
+      {
+      GoSouth();
+      }
+    }
+    else if(SDLK_DOWN)
+    {
+      move = 1;
+      GoNorth();
+    }
+    else if(SDLK_LEFT)
+    {
+     move = 1;
+      GoEast();
+    }
+    else if (SDLK_RIGHT)
+    {
+     move = 1;
+      GoWest();
+    }*/
   }
 }
