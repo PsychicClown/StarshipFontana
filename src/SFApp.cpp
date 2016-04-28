@@ -78,7 +78,7 @@ void SFApp::OnUpdateWorld() {
   }
 
   for(auto c: coins) {
-    c->GoNorth();
+    //c->GoNorth();
   }
 
   // Update enemy positions
@@ -96,13 +96,14 @@ void SFApp::OnUpdateWorld() {
     }
   }
 // player and alien collision
-  for(auto a : aliens){
-    if(player->CollidesWith(a)){
+  for(auto a : aliens)
+  {
+    if(player->CollidesWith(a))
+    {
      player->HandleCollision();
-     a->HandleCollision();
     }
   }
-  // remove dead aliens (the long way
+  // remove dead aliens (the long way)
   list<shared_ptr<SFAsset>> tmp;
   for(auto a : aliens) {
     if(a->IsAlive()) {
