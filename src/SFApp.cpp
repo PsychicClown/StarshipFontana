@@ -83,11 +83,11 @@ int SFApp::OnExecute() {
 void SFApp::OnUpdateWorld() {
   // Update projectile positions
   for(auto p: projectiles) {
-    p->GoNorth();
+     p->GoNorth();
   }
 
   for(auto c: coins) {
-    c->GoNorth();
+    //c->GoNorth();
   }
 
   // Update enemy positions
@@ -101,6 +101,14 @@ void SFApp::OnUpdateWorld() {
       if(p->CollidesWith(a)) {
         p->HandleCollision();
         a->HandleCollision();
+      }
+    }
+  }
+
+  for(auto p : projectiles) {
+    for(auto w: walls) {
+      if(p->CollidesWith(w)){
+        p->HandleCollision();
       }
     }
   }

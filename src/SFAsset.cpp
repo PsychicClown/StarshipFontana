@@ -3,6 +3,7 @@
 int SFAsset::SFASSETID=0;
 auto collision = 0;
 auto collision2 = 0;
+
 SFAsset::SFAsset(SFASSETTYPE type, std::shared_ptr<SFWindow> window): type(type), sf_window(window) {
   this->id   = ++SFASSETID;
 
@@ -125,6 +126,10 @@ void SFAsset::GoNorth() {
   {
     bbox->centre.reset();
     bbox->centre = make_shared<Vector2>(c);
+  }
+  else if (type == SFASSET_PROJECTILE)
+  {
+    SetNotAlive();
   }
 }
 
