@@ -1,10 +1,8 @@
 #include "SFAsset.h"
 
 int SFAsset::SFASSETID=0;
-
-int x = 0;
-int y = 0;
-
+auto collision = 0;
+auto collision2 = 0;
 SFAsset::SFAsset(SFASSETTYPE type, std::shared_ptr<SFWindow> window): type(type), sf_window(window) {
   this->id   = ++SFASSETID;
 
@@ -21,6 +19,8 @@ SFAsset::SFAsset(SFASSETTYPE type, std::shared_ptr<SFWindow> window): type(type)
   case SFASSET_COIN:
     sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/coin.png");
     break;
+  case SFASSET_WALL:
+    sprite = IMG_LoadTexture(sf_window->getRenderer(), "assets/wall.png");
   }
 
   if(!sprite) {
@@ -97,10 +97,8 @@ void SFAsset::OnRender() {
 }
 
 void SFAsset::GoWest() {
-  x = 5.0f;
-  y = 0.0f;
   Vector2 c = *(bbox->centre) + Vector2(-5.0f, 0.0f);
-
+  collision2 = 1;
   if(!(c.getX() < 0)) {
     bbox->centre.reset();
     bbox->centre = make_shared<Vector2>(c);
@@ -108,12 +106,10 @@ void SFAsset::GoWest() {
 }
 
 void SFAsset::GoEast() {
-  x = -5.0f;
-  y = 0.0f;
   int w, h;
   SDL_GetRendererOutputSize(sf_window->getRenderer(), &w, &h);
   Vector2 c = *(bbox->centre) + Vector2(5.0f, 0.0f);
-
+  collision2 = 2;
   if(!(c.getX() > w)) {
     bbox->centre.reset();
     bbox->centre = make_shared<Vector2>(c);
@@ -121,12 +117,10 @@ void SFAsset::GoEast() {
 }
 
 void SFAsset::GoNorth() {
-  y = -5.0f;
-  x = 0.0f;
   int w, h;
   SDL_GetRendererOutputSize(sf_window->getRenderer(), &w, &h);
   Vector2 c = *(bbox->centre) + Vector2(0.0f, 5.0f);
-
+  collision = 1;
   if(!(c.getY() > h))
   {
     bbox->centre.reset();
@@ -135,9 +129,8 @@ void SFAsset::GoNorth() {
 }
 
 void SFAsset::GoSouth() {
-  y = 5.0f;
-  x = 0.0f;
   Vector2 c = *(bbox->centre) + Vector2(0.0f, -5.0f);
+  collision = 2;
   if(!(c.getY() < 0))
   {
     bbox->centre.reset();
@@ -168,8 +161,22 @@ void SFAsset::HandleCollision() {
   }
   if (SFASSET_PLAYER == type)
   {
-    Vector2 c = *(bbox->centre) + Vector2(x, y);
-    bbox->centre.reset();
-    bbox->centre = make_shared<Vector2>(c);
+    if (collision == 1)
+    {
+      GoSouth();
+    }
+    else
+    {
+      GoNorth();
+    }
+    
+    if (collision2 == 1)
+    {
+      GoEast();
+    }
+    else
+    {
+      GoWest();
+    }
   }
 }

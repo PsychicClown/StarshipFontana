@@ -37,7 +37,8 @@ private:
   list<shared_ptr<SFAsset> > projectiles;
   list<shared_ptr<SFAsset> > aliens;
   list<shared_ptr<SFAsset> > coins;
-
+  // wall
+  list<shared_ptr<SFAsset> > walls;
   int fire;
 };
 #endif
