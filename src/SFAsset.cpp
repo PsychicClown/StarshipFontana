@@ -1,14 +1,8 @@
 #include "SFAsset.h"
 
 int SFAsset::SFASSETID=0;
-<<<<<<< HEAD
 auto collision = 0;
 auto collision2 = 0;
-=======
-
-bool collide = false;
-
->>>>>>> 0d9517e4bcdff943077f4d2bc64eb26d53e48039
 SFAsset::SFAsset(SFASSETTYPE type, std::shared_ptr<SFWindow> window): type(type), sf_window(window) {
   this->id   = ++SFASSETID;
 
@@ -126,14 +120,7 @@ void SFAsset::GoNorth() {
   int w, h;
   SDL_GetRendererOutputSize(sf_window->getRenderer(), &w, &h);
   Vector2 c = *(bbox->centre) + Vector2(0.0f, 5.0f);
-<<<<<<< HEAD
   collision = 1;
-=======
-  
-
-    collide = true;
-
->>>>>>> 0d9517e4bcdff943077f4d2bc64eb26d53e48039
   if(!(c.getY() > h))
   {
     bbox->centre.reset();
@@ -143,11 +130,7 @@ void SFAsset::GoNorth() {
 
 void SFAsset::GoSouth() {
   Vector2 c = *(bbox->centre) + Vector2(0.0f, -5.0f);
-<<<<<<< HEAD
   collision = 2;
-=======
-
->>>>>>> 0d9517e4bcdff943077f4d2bc64eb26d53e48039
   if(!(c.getY() < 0))
   {
     bbox->centre.reset();
@@ -196,34 +179,5 @@ void SFAsset::HandleCollision() {
     {
       GoWest();
     }
-
-   if(collide == true)
-  {
-     GoSouth();
-     collide = false;
-  }
-/*
-    if(SDLK_UP)
-    {
-      if (move == 0)
-      {
-      GoSouth();
-      }
-    }
-    else if(SDLK_DOWN)
-    {
-      move = 1;
-      GoNorth();
-    }
-    else if(SDLK_LEFT)
-    {
-     move = 1;
-      GoEast();
-    }
-    else if (SDLK_RIGHT)
-    {
-     move = 1;
-      GoWest();
-    }*/
   }
 }
