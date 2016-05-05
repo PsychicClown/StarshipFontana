@@ -121,7 +121,12 @@ void SFAsset::GoNorth() {
   int w, h;
   SDL_GetRendererOutputSize(sf_window->getRenderer(), &w, &h);
   Vector2 c = *(bbox->centre) + Vector2(0.0f, 5.0f);
-  collision = 1;
+
+  if (type == SFASSET_PLAYER)
+  {
+    collision = 1;
+  }
+  
   if(!(c.getY() > h))
   {
     bbox->centre.reset();
@@ -166,23 +171,21 @@ void SFAsset::HandleCollision() {
   }
   if (SFASSET_PLAYER == type)
   {
-
-    if (collision == 1)
-    {
+    if (collision == 1) {
       GoSouth();
     }
-    else
-    {
+    else {
       GoNorth();
-    }
-    
-    if (collision2 == 1)
-    {
+    }    
+    if (collision2 == 1) {
       GoEast();
     }
-    else
-    {
+    else {
       GoWest();
     }
+  }
+  if (SFASSET_COIN == type)
+  {
+    SetNotAlive();
   }
 }
