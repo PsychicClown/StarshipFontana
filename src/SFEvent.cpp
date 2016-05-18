@@ -19,7 +19,7 @@ SFEvent::SFEvent(const SDL_Event & event) {
     case SDLK_RIGHT:
       code = SFEVENT_PLAYER_RIGHT;
       break;
-// kyle's up code
+// kup and down movement for the player
     case SDLK_UP:
       code = SFEVENT_PLAYER_UP;
       break;

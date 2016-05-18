@@ -121,7 +121,7 @@ void SFAsset::GoNorth() {
   int w, h;
   SDL_GetRendererOutputSize(sf_window->getRenderer(), &w, &h);
   Vector2 c = *(bbox->centre) + Vector2(0.0f, 5.0f);
-
+  // stops other objects/assets interfearing with player movement.
   if (type == SFASSET_PLAYER)
   {
     collision = 1;
@@ -131,7 +131,7 @@ void SFAsset::GoNorth() {
   {
     bbox->centre.reset();
     bbox->centre = make_shared<Vector2>(c);
-  }
+  }// removes projectiles when they hit the top of screen.
   else if (type == SFASSET_PROJECTILE)
   {
     SetNotAlive();
@@ -169,6 +169,7 @@ void SFAsset::HandleCollision() {
   if(SFASSET_PROJECTILE == type || SFASSET_ALIEN == type) {
     SetNotAlive();
   }
+  // handles player collision with walls
   if (SFASSET_PLAYER == type)
   {
     if (collision == 1) {
@@ -184,6 +185,7 @@ void SFAsset::HandleCollision() {
       GoWest();
     }
   }
+  // kills/removes the coin
   if (SFASSET_COIN == type)
   {
     SetNotAlive();
